@@ -128,7 +128,7 @@ const RoutesTab = () => {
           className="btn btn-primary"
           onClick={handleSubmit}
           disabled={loading || !(nombre || geoJSON || lat || longt)}
-        >Set route</button>
+        >{ruta ? "Update route" : "Create route"}</button>
       </div>
       {
         errorMsg && (
