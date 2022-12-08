@@ -1,4 +1,8 @@
-export { default as AuthContext, AuthProvider } from "./AuthContext";
+export {
+  default as AuthContext,
+  AuthProvider,
+  type IUser
+} from "./AuthContext";
 export {
   default as OrganizationContext,
   OrganizationProvider,

@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 
 import Map from "../../components/Map"
 import { OrganizationContext, AuthContext, IRuta } from "../../context"
-import { STRAPI } from "../../lib/urls"
+import { STRAPI } from "../../lib/constants"
 
 const RoutesTab = () => {
   const { ruta, setRuta, organizations } = useContext(OrganizationContext)

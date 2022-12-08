@@ -2,7 +2,8 @@ import { useState, useContext, useEffect } from "react"
 import { NavLink, Outlet } from "react-router-dom";
 
 import { AuthContext, OrganizationContext } from "../../context"
-import { STRAPI } from "../../lib/urls"
+import { useDriversRequests, useUsersRequests } from "../../hooks/users"
+import { STRAPI } from "../../lib/constants"
 
 const url = `${STRAPI}/api/organizations`
 
@@ -11,7 +12,7 @@ export const Dashboard = () => {
   const { setOrgs } = useContext(OrganizationContext)
 
   if (user === null) {
-    return;
+    return null;
   }
 
   useEffect(() => {
@@ -24,6 +25,9 @@ export const Dashboard = () => {
     .then(setOrgs)
     .catch(console.log)
   }, [])
+
+  const driversRequests = useDriversRequests()
+  const usersRequests = useUsersRequests()
 
   return (
     <div className="container-fluid">
@@ -39,7 +43,24 @@ export const Dashboard = () => {
               <NavLink end to="/dashboard/routes" className="nav-link">Routes</NavLink>
             </li>
             <li>
-              <NavLink end to="/dashboard/drivers" className="nav-link">Drivers</NavLink>
+              <NavLink end to="/dashboard/drivers" className="nav-link">
+                Drivers
+                {
+                  (driversRequests.length > 0) && (
+                    <span className="notification">{ driversRequests.length }</span>
+                  )
+                }
+              </NavLink>
+            </li>
+            <li>
+              <NavLink end to="/dashboard/users" className="nav-link">
+                Users
+                {
+                  (usersRequests.length > 0) && (
+                    <span className="notification">{ usersRequests.length }</span>
+                  )
+                }
+              </NavLink>
             </li>
           </ul>
           <hr />

@@ -1,13 +1,13 @@
 import React, { useEffect, useContext } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { Home, Dashboard, DashboardTab, RoutesTab, DriversTab } from './routes'
+import { Home, Dashboard, HomeTab, RoutesTab, DriversTab, UsersTab } from './routes'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-import { STRAPI } from "./lib/urls"
+import { STRAPI, ROL_CHOFER, ROL_PASAJERO } from "./lib/constants"
 import { AuthContext, AuthProvider, OrganizationProvider } from "./context"
 
 interface AppWrapperProps {
@@ -44,9 +44,10 @@ ReactDOM.render(
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}>
-                <Route path="" element={<DashboardTab />} />
+                <Route path="" element={<HomeTab />} />
                 <Route path="routes" element={<RoutesTab />} />
-                <Route path="drivers" element={<DriversTab />} />
+                <Route path="drivers" element={<DriversTab mode={ROL_CHOFER} />} />
+                <Route path="users" element={<DriversTab mode={ROL_PASAJERO} />} />
               </Route>
               <Route
                 path="*"

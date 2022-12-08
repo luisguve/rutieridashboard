@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link .notification {
+  position: absolute;
+  right: -14px;
+  top: 6px;
+  padding: 2px 10px;
+  background: #60c52d;
+  color: #fff;
+  border-radius: 50%;
+}

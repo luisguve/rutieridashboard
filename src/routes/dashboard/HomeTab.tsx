@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 
 import { AuthContext, OrganizationContext } from "../../context"
-import { STRAPI } from "../../lib/urls"
+import { STRAPI, ROL_CHOFER } from "../../lib/constants"
 
 const url = `${STRAPI}/api/organizations`
 
-const DashboardTab = () => {
+const HomeTab = () => {
   const [name, setName] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
   const [loading, setLoading] = useState(false)
@@ -76,14 +76,14 @@ const DashboardTab = () => {
 
       {
         (organizations.length > 0) && (<>
-          <h4>{organizations.length} organization{(organizations.length > 1) ? "s" : ""} found</h4>
+          <h4>{organizations.length} organization{(organizations.length > 1) ? "s" : ""}</h4>
           <hr />
           {organizations.map(org => (
             <div className="card mb-2" key={org.code}>
               <div className="card-body">
                 <h6>Name: {org.name}</h6>
                 <h6>Code: {org.code}</h6>
-                <h6>Drivers: {org.drivers.length}</h6>
+                <h6>Drivers: {org.users.filter(user => user.role.name === ROL_CHOFER).length}</h6>
                 <h6>Routes: {org.rutas.length}</h6>
               </div>
             </div>
@@ -94,4 +94,4 @@ const DashboardTab = () => {
   )
 }
 
-export default DashboardTab
+export default HomeTab

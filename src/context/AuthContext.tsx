@@ -1,10 +1,20 @@
 import { createContext, useState, useEffect } from "react"
 
+import { IRuta } from "./OrganizationContext"
+
+export interface IRole {
+  id: number
+  type: string
+  name: string
+}
+
 export interface IUser {
-  username: string,
-  email: string,
-  id: number,
+  username: string
+  email: string
+  id: number
   token: string
+  role: IRole
+  ruta?: IRuta | null
 }
 
 interface IAuthContext {

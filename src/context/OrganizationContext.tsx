@@ -30,7 +30,7 @@ export interface IOrganization {
   name: string
   code: string
   requests: Array<IUser>
-  drivers: Array<IUser>
+  users: Array<IUser>
   rutas: Array<IRuta>
   owner: IUser
   id: number
@@ -42,6 +42,8 @@ interface IOrganizationContext {
   addOrg: (_: IOrganization) => void
   setOrgs: (_: Array<IOrganization>) => void
   setRuta: (_: IRuta) => void
+  update: (_: IOrganization) => void
+  updateDriver: (_: IUser) => void
 }
 
 const defaultContext: IOrganizationContext = {
@@ -50,6 +52,8 @@ const defaultContext: IOrganizationContext = {
   addOrg: (_: IOrganization) => {},
   setOrgs: (_: Array<IOrganization>) => {},
   setRuta: (_: IRuta) => {},
+  update: (_: IOrganization) => {},
+  updateDriver: (_: IUser) => {}
 }
 
 const OrganizationContext = createContext<IOrganizationContext>(defaultContext)
@@ -67,8 +71,13 @@ export const OrganizationProvider = (props: ProviderProps) => {
     return rutas.length ? rutas[0] : null
   })
 
+  const setOrgs = (orgs: Array<IOrganization>) => {
+    setOrganizations(() => orgs)
+    saveSession(orgs)
+  }
+
   const addOrg = (org: IOrganization) => {
-    setOrganizations((prevState) => prevState.concat(org))
+    setOrgs(organizations.concat(org))
   }
 
   useEffect(() => {
@@ -91,13 +100,37 @@ export const OrganizationProvider = (props: ProviderProps) => {
     checkLocalData()
   }, [])
 
+  const update = (orgData: IOrganization) => {
+    setOrgs(organizations.map(org => {
+      if (org.code === orgData.code) {
+        org = orgData
+      }
+      return org
+    }))
+  }
+  const updateDriver = (targetUser: IUser) => {
+    setOrganizations((prevData) => {
+      return prevData.map(org => {
+        org.users = org.users.map(u => {
+          if (u.id === targetUser.id) {
+            u = targetUser
+          }
+          return u
+        })
+        return org
+      })
+    })
+  }
+
   return (
     <OrganizationContext.Provider value={{
       organizations,
       addOrg,
-      setOrgs: setOrganizations,
+      setOrgs,
       ruta,
-      setRuta
+      setRuta,
+      update,
+      updateDriver
     }}>
       {props.children}
     </OrganizationContext.Provider>

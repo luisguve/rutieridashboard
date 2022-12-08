@@ -1,6 +1,6 @@
 import { useState, useContext } from "react"
 
-import { STRAPI } from "../lib/urls"
+import { STRAPI } from "../lib/constants"
 import AuthContext from "../context/AuthContext"
 
 interface ILoginProps {
@@ -57,7 +57,7 @@ const RegisterForm = ({onLogin}: ILoginProps) => {
     }
     setLoading(true)
     setErrorMsg("")
-    const url = `${STRAPI}/api/auth/local/register`
+    const url = `${STRAPI}/api/auth/local/register?populate=role`
     fetch(url, {
       method: "POST",
       headers: {
@@ -81,7 +81,8 @@ const RegisterForm = ({onLogin}: ILoginProps) => {
         username,
         email,
         id: data.user.id,
-        token: data.jwt
+        token: data.jwt,
+        role: data.role
       })
       onLogin()
     })
@@ -94,10 +95,8 @@ const RegisterForm = ({onLogin}: ILoginProps) => {
         console.log(response);
       }
       setErrorMsg(error)
-    })
-    .finally(() => {
       setLoading(false)
-    });
+    })
   }
   let extraProps = {}
   if (!validInputs()) {
@@ -180,7 +179,7 @@ const LoginForm = ({onLogin}: ILoginProps) => {
     }
     setLoading(true)
     setErrorMsg("")
-    const url = `${STRAPI}/api/auth/local`
+    const url = `${STRAPI}/api/auth/local?populate=role`
     fetch(url, {
       method: "POST",
       headers: {
@@ -203,7 +202,8 @@ const LoginForm = ({onLogin}: ILoginProps) => {
         username: data.user.username,
         email: data.user.email,
         id: data.user.id,
-        token: data.jwt
+        token: data.jwt,
+        role: data.role
       })
       onLogin()
     })
@@ -216,10 +216,8 @@ const LoginForm = ({onLogin}: ILoginProps) => {
         console.log(response);
       }
       setErrorMsg(error)
-    })
-    .finally(() => {
       setLoading(false)
-    });
+    })
   }
   return (
     <div>
