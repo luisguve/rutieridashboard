@@ -4,6 +4,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext, OrganizationContext } from "../../context"
 import { useDriversRequests, useUsersRequests } from "../../hooks/users"
 import { STRAPI } from "../../lib/constants"
+import SubscribeForm from "../../components/SubscribeForm"
+import DemoMessage from "../../components/DemoMessage"
 
 const url = `${STRAPI}/api/organizations`
 
@@ -35,34 +37,38 @@ export const Dashboard = () => {
         <div className="col-2 d-flex flex-column flex-shrink-0 p-3 bg-light vh-100 sticky-top">
           <h3 className="text-center">Dashboard</h3>
           <hr />
-          <ul className="nav nav-pills flex-column mb-auto">
-            <li className="nav-item">
-              <NavLink end to="/dashboard" className="nav-link">Home</NavLink>
-            </li>
-            <li>
-              <NavLink end to="/dashboard/routes" className="nav-link">Routes</NavLink>
-            </li>
-            <li>
-              <NavLink end to="/dashboard/drivers" className="nav-link">
-                Drivers
-                {
-                  (driversRequests.length > 0) && (
-                    <span className="notification">{ driversRequests.length }</span>
-                  )
-                }
-              </NavLink>
-            </li>
-            <li>
-              <NavLink end to="/dashboard/users" className="nav-link">
-                Users
-                {
-                  (usersRequests.length > 0) && (
-                    <span className="notification">{ usersRequests.length }</span>
-                  )
-                }
-              </NavLink>
-            </li>
-          </ul>
+          <div className="mb-auto">
+            <ul className="nav nav-pills flex-column">
+              <li className="nav-item">
+                <NavLink end to="/dashboard" className="nav-link">Home</NavLink>
+              </li>
+              <li>
+                <NavLink end to="/dashboard/routes" className="nav-link">Routes</NavLink>
+              </li>
+              <li>
+                <NavLink end to="/dashboard/drivers" className="nav-link">
+                  Drivers
+                  {
+                    (driversRequests.length > 0) && (
+                      <span className="notification">{ driversRequests.length }</span>
+                    )
+                  }
+                </NavLink>
+              </li>
+              <li>
+                <NavLink end to="/dashboard/users" className="nav-link">
+                  Users
+                  {
+                    (usersRequests.length > 0) && (
+                      <span className="notification">{ usersRequests.length }</span>
+                    )
+                  }
+                </NavLink>
+              </li>
+            </ul>
+            <hr />
+            <SubscribeForm />
+          </div>
           <hr />
           <div className="dropdown">
             <a href="#" className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,8 +81,11 @@ export const Dashboard = () => {
             </ul>
           </div>
         </div>
-        <main className="col-9 p-4">
-          <Outlet />
+        <main className="col-9 p-4 d-flex flex-column justify-content-between">
+          <section>
+            <Outlet />
+          </section>
+          <DemoMessage />
         </main>
       </div>
     </div>

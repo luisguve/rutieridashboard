@@ -48,7 +48,7 @@ const HomeTab = () => {
     })
   }
   return (
-    <>
+    <div>
       <h4>home</h4>
       <hr />
       <h5>Create an organisation</h5>
@@ -91,7 +91,7 @@ const HomeTab = () => {
           ))}
         </>)
       }
-    </>
+    </div>
   )
 }
 
