@@ -108,7 +108,7 @@ const Map = (props) => {
   return (
     <div>
       <div className="mb-3">
-        <p className="fw-bold">Inicio y fin de ruta</p>
+        <p className="fw-bold">Start and finish</p>
         <MapContainer center={center} zoom={14}>
           <TileLayer
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
@@ -141,7 +141,7 @@ const Map = (props) => {
         </MapContainer>
       </div>
       <div className="mb-3">
-        <p fontWeight="bold">Ingresar archivo GeoJSON</p>
+        <p fontWeight="bold">Enter GeoJSON file</p>
         <input
           type="file"
           accept=".json,.geojson"
@@ -152,15 +152,15 @@ const Map = (props) => {
         <div>
           <div>
             <p>
-              Para crear un archivo GeoJSON, cree una ruta en coche en <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://mymaps.google.com">https://mymaps.google.com</a></span>.
+              In order to create a GeoJSON file, create a route in <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://mymaps.google.com">https://mymaps.google.com</a></span>.
             </p>
           </div>
           <div>
-            <p>Luego, exporte la ruta creada a un archivo KMZ.</p>
+            <p>Then, export the resulting route to a KMZ file.</p>
           </div>
           <div>
             <p>
-              Finalmente, convierta este archivo a un formato GeoJSON con la herramienta <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> y agregue el archivo resultante aquí.
+              Finally, convert this file into a GeoJSON format with this tool: <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> y agregue el archivo resultante aquí.
             </p>
           </div>
         </div>
