@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 
 import { AuthContext, OrganizationContext } from "../../context"
-import { STRAPI, ROL_CHOFER } from "../../lib/constants"
+import { STRAPI, ROL_CHOFER, ROL_PASAJERO } from "../../lib/constants"
 
 const url = `${STRAPI}/api/organizations`
 
@@ -84,6 +84,7 @@ const HomeTab = () => {
                 <h6>Name: {org.name}</h6>
                 <h6>Code: {org.code}</h6>
                 <h6>Drivers: {org.users.filter(user => user.role.name === ROL_CHOFER).length}</h6>
+                <h6>Users: {org.users.filter(user => user.role.name === ROL_PASAJERO).length}</h6>
                 <h6>Routes: {org.rutas.length}</h6>
               </div>
             </div>

@@ -193,7 +193,7 @@ const UsersTab = (props: DriversTabProps) => {
                         <button
                           className="btn btn-primary"
                           onClick={() => processRequest(driver.id, true)}
-                          disabled={loading}
+                          disabled={loading || (drivers.length > 0)}
                         >Accept</button>
                         <button
                           className="btn btn-danger ms-3"
