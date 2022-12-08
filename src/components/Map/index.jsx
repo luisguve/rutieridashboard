@@ -75,7 +75,8 @@ const Map = (props) => {
   const {
     value,
     onChange,
-    latlong
+    latlong,
+    id: idRuta
   } = props;
 
   const changeFile = (e) => {
@@ -105,6 +106,63 @@ const Map = (props) => {
   const { lat, longt } = latlong;
   const center = [lat, longt];
 
+  useEffect(() => {
+    if (idRuta) {
+      const geoQuery = geoFire.query({
+        center,
+        radius: 20
+      });
+
+      geoQuery.on("key_entered", function(key, location, distance) {
+        console.log("key_entered", {key, location, distance})
+        if (!key.includes(`ruta-${idRuta}`)) {
+          return
+        }
+        if (key.includes("pasajero") && !pasajeros.some(p => p.key === key)) {
+          setPasajeros(pasajeros.concat({ key, location }))
+        } else if (key.includes("chofer") && !choferes.some(c => c.key === key)) {
+          setChoferes(choferes.concat({ key, location }))
+        }
+      });
+
+      geoQuery.on("key_exited", function(key, location, distance) {
+        console.log("key_exited", {key, location, distance})
+        if (!key.includes(`ruta-${idRuta}`)) {
+          return
+        }
+        if (key.includes("pasajero")) {
+          setPasajeros(pasajeros.filter(p => p.key !== key))
+        } else if (key.includes("chofer")) {
+          setChoferes(choferes.filter(c => c.key !== key))
+        }
+      });
+
+      geoQuery.on("key_moved", function(key, location, distance) {
+        console.log("key_moved", {key, location, distance})
+        if (!key.includes(`ruta-${idRuta}`)) {
+          return
+        }
+        let updateList;
+
+        if (key.includes("pasajero")) {
+          updateList = setPasajeros;
+        } else if (key.includes("chofer")) {
+          updateList = setChoferes;
+        }
+
+        updateList((collection) => {
+          return collection.map(item => {
+            if (item.key === key) {
+              item.location = location;
+            }
+            return item
+          })
+        })
+      });
+      return geoQuery.cancel
+    }
+  }, [])
+
   return (
     <div>
       <div className="mb-3">
@@ -120,7 +178,7 @@ const Map = (props) => {
           {
             (geoJSONData && !geoJSONData.empty) && <GeoJSON data={geoJSONData} />
           }
-          {/*
+          {
             choferes.concat(pasajeros).map(data => {
               const markerIcon = data.key.includes("chofer") ? busIcon : personIcon
               return (
@@ -135,7 +193,7 @@ const Map = (props) => {
                   </Popup>
                 </Marker>
               )
-            */})
+            })
           }
           <MapMoves center={center} />
         </MapContainer>

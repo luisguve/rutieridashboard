@@ -122,7 +122,12 @@ const RoutesTab = () => {
           />
         </div>
         <div>
-          <Map value={geoJSON} onChange={setGeoJSON} latlong={{lat, longt}} />
+          <Map
+            value={geoJSON}
+            onChange={setGeoJSON}
+            latlong={{lat, longt}}
+            id={ruta ? ruta.id : null}
+          />
         </div>
         <button
           className="btn btn-primary"
