@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { Home, Dashboard, HomeTab, RoutesTab, DriversTab, UsersTab } from './routes'
+import { Home, Dashboard, HomeTab, RoutesTab, UsersTab } from './routes'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -46,8 +46,8 @@ ReactDOM.render(
               <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}>
                 <Route path="" element={<HomeTab />} />
                 <Route path="routes" element={<RoutesTab />} />
-                <Route path="drivers" element={<DriversTab mode={ROL_CHOFER} />} />
-                <Route path="users" element={<DriversTab mode={ROL_PASAJERO} />} />
+                <Route path="drivers" element={<UsersTab mode={ROL_CHOFER} />} />
+                <Route path="users" element={<UsersTab mode={ROL_PASAJERO} />} />
               </Route>
               <Route
                 path="*"
