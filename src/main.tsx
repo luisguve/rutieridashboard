@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import { Home, Dashboard, HomeTab, RoutesTab, UsersTab } from './routes'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Popper from 'popper.js';
+import Popper from '@popperjs/core';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 // import i18n (needs to be bundled ;))
 import './i18n';

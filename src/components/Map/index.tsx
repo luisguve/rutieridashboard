@@ -11,9 +11,9 @@ import {
   Marker,
   Popup,
   TileLayer,
-  GeoJSON
+  GeoJSON,
+  useMap
 } from "react-leaflet";
-import { useMap } from "react-leaflet/hooks";
 import "./map.css";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
@@ -23,7 +23,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import bus from "./bus.png"
 import person from "./person.png"
 
-delete L.Icon.Default.prototype._getIconUrl;
+// delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: iconRetina,
@@ -71,7 +71,28 @@ const firebaseRef = firebase.database().ref();
 // Create a GeoFire index
 var geoFire = new GeoFire(firebaseRef);
 
-const Map = (props) => {
+interface GeoQueryProps {
+  key: string
+  location: [number, number]
+  distance: number
+}
+
+interface Point {
+  key: string
+  location: [number, number]
+}
+
+interface MapProps {
+  value: string
+  onChange: (_: string) => void
+  latlong: {
+    lat: number
+    longt: number
+  }
+  id: number | null
+}
+
+const Map = (props: MapProps) => {
 
   const { t } = useTranslation("routes")
 
@@ -82,8 +103,8 @@ const Map = (props) => {
     id: idRuta
   } = props;
 
-  const changeFile = (e) => {
-    const file = (e.target.files || {})[0];
+  const changeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = (e.currentTarget.files || [null])[0];
 
     if (!file) {
       onChange(JSON.stringify({empty: true}));
@@ -92,10 +113,14 @@ const Map = (props) => {
 
     let reader = new FileReader();
 
-    reader.onload = (e) => {
-      const str = e.target.result;
-      const json = JSON.stringify(JSON.parse(str));
-      onChange(json);
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      if (e.target) {
+        const str = e.target.result;
+        if (typeof str === "string") {
+          const json = JSON.stringify(JSON.parse(str));
+          onChange(json);
+        }
+      }
     };
 
     reader.readAsText(file);
@@ -103,11 +128,11 @@ const Map = (props) => {
 
   const geoJSONData = value ? JSON.parse(value) : null;
 
-  const [choferes, setChoferes] = useState([]);
-  const [pasajeros, setPasajeros] = useState([]);
+  const [choferes, setChoferes] = useState<Array<Point>>([]);
+  const [pasajeros, setPasajeros] = useState<Array<Point>>([]);
 
   const { lat, longt } = latlong;
-  const center = [lat, longt];
+  const center: [number, number] = [lat, longt];
 
   useEffect(() => {
     if (idRuta) {
@@ -116,7 +141,7 @@ const Map = (props) => {
         radius: 20
       });
 
-      geoQuery.on("key_entered", function(key, location, distance) {
+      geoQuery.on("key_entered", function({key, location, distance}: GeoQueryProps) {
         console.log("key_entered", {key, location, distance})
         if (!key.includes(`ruta-${idRuta}`)) {
           return
@@ -128,7 +153,7 @@ const Map = (props) => {
         }
       });
 
-      geoQuery.on("key_exited", function(key, location, distance) {
+      geoQuery.on("key_exited", function({key, location, distance}: GeoQueryProps) {
         console.log("key_exited", {key, location, distance})
         if (!key.includes(`ruta-${idRuta}`)) {
           return
@@ -140,16 +165,14 @@ const Map = (props) => {
         }
       });
 
-      geoQuery.on("key_moved", function(key, location, distance) {
+      geoQuery.on("key_moved", function({key, location, distance}: GeoQueryProps) {
         console.log("key_moved", {key, location, distance})
         if (!key.includes(`ruta-${idRuta}`)) {
           return
         }
-        let updateList;
+        let updateList = setPasajeros
 
-        if (key.includes("pasajero")) {
-          updateList = setPasajeros;
-        } else if (key.includes("chofer")) {
+        if (key.includes("chofer")) {
           updateList = setChoferes;
         }
 
@@ -161,6 +184,7 @@ const Map = (props) => {
             return item
           })
         })
+
       });
       return geoQuery.cancel
     }
@@ -172,11 +196,11 @@ const Map = (props) => {
         <p className="fw-bold">{t("details.startfinish")}</p>
         <MapContainer center={center} zoom={14}>
           <TileLayer
-          attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
-          url={url}
-          id={"mapbox/streets-v11"}
-          tileSize={512}
-          zoomOffset={-1}
+            attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+            url={url}
+            id={"mapbox/streets-v11"}
+            tileSize={512}
+            zoomOffset={-1}
           />
           {
             (geoJSONData && !geoJSONData.empty) && <GeoJSON data={geoJSONData} />
@@ -202,7 +226,7 @@ const Map = (props) => {
         </MapContainer>
       </div>
       <div className="mb-3">
-        <p fontWeight="bold">{t("details.geojson_input")}</p>
+        <p className="fw-bold">{t("details.geojson_input")}</p>
         <input
           type="file"
           accept=".json,.geojson"
@@ -213,7 +237,7 @@ const Map = (props) => {
         <div>
           <div>
             <p>
-              {t("instructions.p1")} <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://mymaps.google.com">https://mymaps.google.com</a></span>.
+              {t("instructions.p1")} <span className="fw-bold"><a target="_blank" rel="noreferrer" href="https://mymaps.google.com">https://mymaps.google.com</a></span>.
             </p>
           </div>
           <div>
@@ -221,7 +245,7 @@ const Map = (props) => {
           </div>
           <div>
             <p>
-              {t("instructions.p3.1")}<span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> {t("instructions.p3.2")}
+              {t("instructions.p3.1")}<span className="fw-bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> {t("instructions.p3.2")}
             </p>
           </div>
         </div>
@@ -232,7 +256,11 @@ const Map = (props) => {
 
 export default Map;
 
-const MapMoves = ({center}) => {
+interface MapMovesProps {
+  center: [number, number]
+}
+
+const MapMoves = ({center}: MapMovesProps) => {
   const map = useMap()
   useEffect(() => {
     map.flyTo(center)

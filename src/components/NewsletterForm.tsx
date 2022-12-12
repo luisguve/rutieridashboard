@@ -2,10 +2,16 @@ import { useState, useEffect } from 'react';
 import { sanitize } from '../lib/miscellaneous';
 import { useTranslation } from 'react-i18next';
 
-const NewsletterForm = ( { status, message, onValidated }) => {
+interface NewsletterFormProps {
+  status: string | null
+  message: string | null | Error
+  onValidated: (_: any) => void
+}
 
-  const [ error, setError ] = useState(null);
-  const [ email, setEmail ] = useState(null);
+const NewsletterForm = ( { status, message, onValidated }: NewsletterFormProps) => {
+
+  const [ error, setError ] = useState<string | null>(null);
+  const [ email, setEmail ] = useState<string | null>(null);
 
   const { t } = useTranslation("newsletter")
 
@@ -34,7 +40,7 @@ const NewsletterForm = ( { status, message, onValidated }) => {
    *
    * @param event
    */
-  const handleInputKeyEvent = ( event ) => {
+  const handleInputKeyEvent = (event: React.KeyboardEvent<HTMLInputElement>) => {
     setError(null);
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
@@ -51,7 +57,7 @@ const NewsletterForm = ( { status, message, onValidated }) => {
    * @param {String} message
    * @return {null|*}
    */
-  const getMessage = (message) => {
+  const getMessage = (message: string) => {
     if ( !message ) {
       return null;
     }
@@ -89,7 +95,7 @@ const NewsletterForm = ( { status, message, onValidated }) => {
             dangerouslySetInnerHTML={{ __html: error || getMessage( message ) }}
           />
         ) : null }
-        {'success' === status && 'error' !== status && !error && (
+        {'success' === status && !error && (
           <div className="text-success fw-bold pt-2" dangerouslySetInnerHTML={{ __html: sanitize(message) }} />
         )}
       </div>
