@@ -94,14 +94,14 @@ const NewsletterForm = ( { status, message, onValidated }: NewsletterFormProps) 
         </button>
       </div>
       <div className="small">
-        {'error' === status || error ? (
+        {('error' === status || error) ? (
           <div
             className="text-danger pt-2"
-            dangerouslySetInnerHTML={{ __html: error || getMessage( message ) }}
+            dangerouslySetInnerHTML={{ __html: (error || getMessage( message )) || "" }}
           />
         ) : null }
-        {'success' === status && !error && (
-          <div className="text-success fw-bold pt-2" dangerouslySetInnerHTML={{ __html: sanitize(message) }} />
+        {('success' === status && !error) && (
+          <div className="text-success fw-bold pt-2" dangerouslySetInnerHTML={{ __html: sanitize(message ? message.toString() : "") }} />
         )}
       </div>
     </div>
