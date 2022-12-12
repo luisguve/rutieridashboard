@@ -1,7 +1,9 @@
-import { useState, useContext } from "react"
+import { useState, useContext, Suspense } from "react"
+import { useTranslation } from 'react-i18next';
 
 import { STRAPI } from "../lib/constants"
 import AuthContext from "../context/AuthContext"
+import Loading from "./Loading"
 
 interface ILoginProps {
   onLogin: () => void
@@ -23,6 +25,7 @@ const StrapiLogin = ({onLogin}: ILoginProps) => {
 export default StrapiLogin
 
 const RegisterForm = ({onLogin}: ILoginProps) => {
+  const { t } = useTranslation("auth");
   const { loginUser } = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState("")
@@ -52,7 +55,7 @@ const RegisterForm = ({onLogin}: ILoginProps) => {
       return
     }
     if (!(password === password2)) {
-      alert("Both passwords must be equal")
+      alert(t("equal_passwords"))
       return
     }
     setLoading(true)
@@ -105,20 +108,20 @@ const RegisterForm = ({onLogin}: ILoginProps) => {
     }
   }
   return (
-    <div>
+    <Suspense fallback={Loading}>
       <div className="d-flex flex-column border rounded p-1 p-md-3">
-        <h4 className="fs-5 text-center">Register</h4>
+        <h4 className="fs-5 text-center">{t("register")}</h4>
         <form className="d-flex flex-column" onSubmit={handleSubmit}>
           <label className="d-flex flex-column mb-2">
-            Full name
+            {t("fullname")}
             <input className="form-control" type="text" value={username} onChange={handleName} required />
           </label>
           <label className="d-flex flex-column mb-2">
-            Email address
+            {t("email")}
             <input className="form-control" type="email" value={email} onChange={handleEmail} required />
           </label>
           <label className="d-flex flex-column mb-2">
-            Password
+            {t("password_input")}
             <input className="form-control"
               type={mostrar ? "text" : "password"}
               value={password}
@@ -127,7 +130,7 @@ const RegisterForm = ({onLogin}: ILoginProps) => {
             />
           </label>
           <label className="d-flex flex-column mb-2">
-            Confirm password
+            {t("password_input_confirm")}
             <input className="form-control"
               type={mostrar ? "text" : "password"}
               value={password2}
@@ -142,22 +145,23 @@ const RegisterForm = ({onLogin}: ILoginProps) => {
               value={mostrar ? "checked" : undefined}
               onChange={() => setMostrar(!mostrar)}
             />
-            View password
+            {t("view_password")}
           </label>
           <button
             type="submit"
             className="btn btn-primary"
             disabled={!validInputs() || loading}
-          >Register</button>
+          >{t("register")}</button>
         </form>
       </div>
       <div className="mt-2">
         <ErrorBox msg={errorMsg} />
       </div>
-    </div>
+    </Suspense>
   )
 }
 const LoginForm = ({onLogin}: ILoginProps) => {
+  const { t } = useTranslation("auth");
   const { loginUser } = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState("")
@@ -220,29 +224,29 @@ const LoginForm = ({onLogin}: ILoginProps) => {
     })
   }
   return (
-    <div>
+    <Suspense fallback={Loading}>
       <div className="d-flex flex-column border rounded p-1 p-md-3">
-        <h4 className="fs-5 text-center">Login</h4>
+        <h4 className="fs-5 text-center">{t("login")}</h4>
         <form className="d-flex flex-column" onSubmit={handleSubmit}>
           <label className="d-flex flex-column mb-2">
-            Email address
+            {t("email")}
             <input className="form-control" type="email" value={email} onChange={handleEmail} required />
           </label>
           <label className="d-flex flex-column mb-2">
-            Password
+            {t("password_input")}
             <input className="form-control" type="password" value={password} onChange={handlePassword} required />
           </label>
           <button
             type="submit"
             className="btn btn-primary"
             disabled={!validInputs() || loading}
-          >Login</button>
+          >{t("login")}</button>
         </form>
       </div>
       <div className="mt-2">
         <ErrorBox msg={errorMsg} />
       </div>
-    </div>
+    </Suspense>
   )
 }
 
@@ -254,3 +258,4 @@ const ErrorBox = ({msg}: {msg: string}) => {
     <div className="alert alert-danger">{msg}</div>
   )
 }
+

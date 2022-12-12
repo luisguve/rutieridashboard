@@ -1,11 +1,14 @@
+import { useTranslation } from "react-i18next"
+
 const DemoMessage = () => {
+  const { t } = useTranslation("demo");
   return (
     <div className="alert alert-info">
       <p className="text-center">
-        This is just a demo version, only one organization, one route and one driver is allowed.
+        {t("p1")}
       </p>
       <p className="mb-0 text-center">
-        Get to know when we launch by subscribing to our newsletter using the form in the sidebar
+        {t("p2")}
       </p>
     </div>
   )

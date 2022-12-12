@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useTranslation } from 'react-i18next';
 
 import { AuthContext, OrganizationContext } from "../../context"
 import { STRAPI, ROL_CHOFER, ROL_PASAJERO } from "../../lib/constants"
@@ -11,6 +12,7 @@ const HomeTab = () => {
   const [loading, setLoading] = useState(false)
   const { user } = useContext(AuthContext);
   const { organizations, addOrg } = useContext(OrganizationContext)
+  const { t } = useTranslation("home")
 
   const handleChangeName = (e: React.FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value)
@@ -41,7 +43,7 @@ const HomeTab = () => {
     })
     .catch(error => {
       console.log(error)
-      setErrorMsg("Could not create organization")
+      setErrorMsg(t("error") || "Could not create organization")
     })
     .finally(() => {
       setLoading(false)
@@ -49,11 +51,11 @@ const HomeTab = () => {
   }
   return (
     <div>
-      <h4>home</h4>
+      <h4>{t("heading")}</h4>
       <hr />
-      <h5>Create an organisation</h5>
+      <h5>{t("create")}</h5>
       <div className="mb-3">
-        <label htmlFor="nameinput" className="form-label">Organization name</label>
+        <label htmlFor="nameinput" className="form-label">{t("name")}</label>
         <input
           type="text"
           className="form-control mb-3"
@@ -66,7 +68,7 @@ const HomeTab = () => {
           className="btn btn-primary"
           onClick={handleSubmit}
           disabled={loading || !name || (organizations.length > 0)}
-        >Create organization</button>
+        >{t("action")}</button>
       </div>
       {
         errorMsg && (
@@ -76,16 +78,21 @@ const HomeTab = () => {
 
       {
         (organizations.length > 0) && (<>
-          <h4>{organizations.length} organization{(organizations.length > 1) ? "s" : ""}</h4>
+          <h4>
+            { t("quantity", {length: organizations.length}) }
+          </h4>
           <hr />
           {organizations.map(org => (
             <div className="card mb-2" key={org.code}>
               <div className="card-body">
-                <h6>Name: {org.name}</h6>
-                <h6>Code: {org.code}</h6>
-                <h6>Drivers: {org.users.filter(user => user.role.name === ROL_CHOFER).length}</h6>
-                <h6>Users: {org.users.filter(user => user.role.name === ROL_PASAJERO).length}</h6>
-                <h6>Routes: {org.rutas.length}</h6>
+                <h6>{t("details.name")}: {org.name}</h6>
+                <h6>{t("details.code")}: {org.code}</h6>
+                <h6>{t("details.drivers")}: {org.users.filter(user => user.role.name === ROL_CHOFER).length}</h6>
+                <h6>{t("details.users")}: {org.users.filter(user => user.role.name === ROL_PASAJERO).length}</h6>
+                <h6>{t("details.routes")}: {org.rutas.length}</h6>
+              </div>
+              <div className="card-footer">
+                {t("details.tip.p1")} <span className="fw-bold">{org.code}</span> {t("details.tip.p2")}
               </div>
             </div>
           ))}

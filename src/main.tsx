@@ -5,6 +5,8 @@ import { Home, Dashboard, HomeTab, RoutesTab, UsersTab } from './routes'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+// import i18n (needs to be bundled ;))
+import './i18n';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import { STRAPI, ROL_CHOFER, ROL_PASAJERO } from "./lib/constants"

@@ -1,0 +1,19 @@
+{
+  "heading": "Inicio",
+  "create": "Crear una organización",
+  "name": "Nombre de la organización",
+  "action": "Crear",
+  "error": "No se pudo crear la organización",
+  "quantity": "Tienes {length, plural, =1 {una organización} other {# organizaciones}}",
+  "details": {
+    "name": "Nombre",
+    "code": "Código",
+    "drivers": "Conductores",
+    "users": "Usuarios",
+    "routes": "Rutas",
+    "tip": {
+      "p1": "Tip: usa el código",
+      "p2": "para que conductores y usuarios se unan a esta organización desde la App"
+    }
+  }
+}

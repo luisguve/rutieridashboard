@@ -1,0 +1,21 @@
+{
+  "heading": "Routes",
+  "no_org": "Create an organization before creating a route",
+  "edit": "Edit route",
+  "create": "Create route",
+  "details": {
+    "name": "Route name",
+    "coordinates": "Coordinates",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "startfinish": "Route start and finish",
+    "geojson_input": "Upload GeoJSON file"
+  },
+  "error": "Could not create or edit route",
+  "instructions": {
+    "p1": "In order to create a GeoJSON file, create a route in",
+    "p2": "Then, export the resulting route to a KMZ file.",
+    "p3.1": "Finally, convert this file into a GeoJSON format with this tool: ",
+    "p3.2": " and upload the resulting GeoJSON file here."
+  }
+}

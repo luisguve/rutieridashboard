@@ -1,13 +1,10 @@
 import { useContext, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 import { OrganizationContext, AuthContext, IUser } from "../../context"
 import { useDrivers, useUsers, useDriversRequests, useUsersRequests } from "../../hooks/users"
 import { STRAPI, ROL_CHOFER, ROL_PASAJERO } from "../../lib/constants"
 
-const DEFAULT_SELECT_VALUE = {
-  id: -1,
-  nombre: "Select a route"
-}
 
 interface DriversTabProps {
   mode: typeof ROL_CHOFER | typeof ROL_PASAJERO
@@ -17,6 +14,12 @@ const UsersTab = (props: DriversTabProps) => {
 
   const { organizations, update, updateDriver } = useContext(OrganizationContext)
   const { user } = useContext(AuthContext)
+  const { t } = useTranslation("users")
+
+  const DEFAULT_SELECT_VALUE = {
+    id: -1,
+    nombre: t("drivers.details.select")
+  }
 
   const { mode } = props
 
@@ -38,9 +41,9 @@ const UsersTab = (props: DriversTabProps) => {
   if (!organizations.length) {
     return (
       <>
-        <h4>drivers</h4>
+        <h4>{mode === ROL_CHOFER ? t("drivers.heading") : t("users.heading")}</h4>
         <hr />
-        <h5>Create an organization in order to invite drivers</h5>
+        <h5>{mode === ROL_CHOFER ? t("drivers.no_org") : t("users.no_org")}</h5>
       </>
     )
   }
@@ -165,7 +168,7 @@ const UsersTab = (props: DriversTabProps) => {
   return (
     <>
       <h4>{
-        (mode === ROL_CHOFER) ? "drivers" : "users"
+        (mode === ROL_CHOFER) ? t("drivers.heading") : t("users.heading")
       }</h4>
       <hr />
       {
@@ -178,28 +181,27 @@ const UsersTab = (props: DriversTabProps) => {
           (driversRequests.length > 0) && (
             <>
               <h5>
-                {driversRequests.length} {" "}
-                request{(driversRequests.length !== 1) ? "s " : " "}
-                to join this organization as
-                driver{(driversRequests.length !== 1) ? "s " : " "}
+                {
+                  t("drivers.requests", {length: driversRequests.length})
+                }
               </h5>
               {
                 driversRequests.map(driver => (
                   <div className="card mb-2" key={driver.email}>
                     <div className="card-body">
-                      <h6>Name: {driver.username}</h6>
-                      <h6>Email: {driver.email}</h6>
+                      <h6>{t("drivers.details.name")}: {driver.username}</h6>
+                      <h6>{t("drivers.details.email")}: {driver.email}</h6>
                       <div>
                         <button
                           className="btn btn-primary"
                           onClick={() => processRequest(driver.id, true)}
                           disabled={loading || (drivers.length > 0)}
-                        >Accept</button>
+                        >{t("drivers.actions.accept")}</button>
                         <button
                           className="btn btn-danger ms-3"
                           onClick={() => processRequest(driver.id, false)}
                           disabled={loading}
-                        >Reject</button>
+                        >{t("drivers.actions.reject")}</button>
                       </div>
                     </div>
                   </div>)
@@ -209,47 +211,50 @@ const UsersTab = (props: DriversTabProps) => {
             </>
           )
         : (usersRequests.length > 0) && (
-            <>
-              <h5>
-                {usersRequests.length} {" "}
-                request{(usersRequests.length !== 1) ? "s " : " "}
-                to join this organization as
-                user{(usersRequests.length !== 1) ? "s " : " "}
-              </h5>
+          <>
+            <h5>
               {
-                usersRequests.map(driver => (
-                  <div className="card mb-2" key={driver.email}>
-                    <div className="card-body">
-                      <h6>Name: {driver.username}</h6>
-                      <h6>Email: {driver.email}</h6>
-                      <div>
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => processRequest(driver.id, true)}
-                          disabled={loading}
-                        >Accept</button>
-                        <button
-                          className="btn btn-danger ms-3"
-                          onClick={() => processRequest(driver.id, false)}
-                          disabled={loading}
-                        >Reject</button>
-                      </div>
-                    </div>
-                  </div>)
-                )
+                t("users.requests", { length: usersRequests.length })
               }
-              <hr />
-            </>
-          )
+            </h5>
+            {
+              usersRequests.map(user => (
+                <div className="card mb-2" key={user.email}>
+                  <div className="card-body">
+                    <h6>{t("users.details.name")}: {user.username}</h6>
+                    <h6>{t("users.details.email")}: {user.email}</h6>
+                    <div>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => processRequest(user.id, true)}
+                        disabled={loading}
+                      >{t("users.actions.accept")}</button>
+                      <button
+                        className="btn btn-danger ms-3"
+                        onClick={() => processRequest(user.id, false)}
+                        disabled={loading}
+                      >{t("users.actions.reject")}</button>
+                    </div>
+                  </div>
+                </div>)
+              )
+            }
+            <hr />
+          </>
+        )
       }
       {
         (mode === ROL_CHOFER) ? (
           <h5>
-            {drivers.length} driver{(drivers.length !== 1) ? "s" : ""} in this organization
+            {
+              t("drivers.quantity", {length: drivers.length})
+            }
           </h5>
         ) : (
           <h5>
-            {users.length} user{(users.length !== 1) ? "s" : ""} in this organization
+            {
+              t("users.quantity", {length: users.length})
+            }
           </h5>
         )
       }
@@ -258,9 +263,9 @@ const UsersTab = (props: DriversTabProps) => {
           drivers.map(driver => (
             <div className="card mb-2" key={driver.email}>
               <div className="card-body">
-                <h6>Name: {driver.username}</h6>
-                <h6>Email: {driver.email}</h6>
-                <h6>Route: {driver.ruta ? driver.ruta.nombre : "N/A"}</h6>
+                <h6>{t("drivers.details.name")}: {driver.username}</h6>
+                <h6>{t("drivers.details.email")}: {driver.email}</h6>
+                <h6>{t("drivers.details.route")}: {driver.ruta ? driver.ruta.nombre : "N/A"}</h6>
                 <select
                   className="form-select"
                   aria-label={"Set a route to "+driver.username}
@@ -283,12 +288,12 @@ const UsersTab = (props: DriversTabProps) => {
                     className="btn btn-outline-danger"
                     onClick={() => removeUser(driver)}
                     disabled={loading}
-                  >Remove driver from organization</button>
+                  >{t("drivers.actions.remove")}</button>
                   <button
                     className="btn btn-primary"
                     onClick={() => setRoute(driver)}
                     disabled={loading}
-                  >Update</button>
+                  >{t("drivers.actions.update")}</button>
                 </div>
               </div>
             </div>)
@@ -296,14 +301,14 @@ const UsersTab = (props: DriversTabProps) => {
         : users.map(user => (
             <div className="card mb-2" key={user.email}>
               <div className="card-body">
-                <h6>Name: {user.username}</h6>
-                <h6>Email: {user.email}</h6>
+                <h6>{t("users.details.name")}: {user.username}</h6>
+                <h6>{t("users.details.email")}: {user.email}</h6>
                 <div className="d-flex flex-row-reverse justify-content-between mt-2">
                   <button
                     className="btn btn-outline-danger"
                     onClick={() => removeUser(user)}
                     disabled={loading}
-                  >Remove user from organization</button>
+                  >{t("users.actions.remove")}</button>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 /* React */
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 /* firebase and geofire */
 import firebase from 'firebase/app';
 import "firebase/database";
@@ -71,6 +72,8 @@ const firebaseRef = firebase.database().ref();
 var geoFire = new GeoFire(firebaseRef);
 
 const Map = (props) => {
+
+  const { t } = useTranslation("routes")
 
   const {
     value,
@@ -166,7 +169,7 @@ const Map = (props) => {
   return (
     <div>
       <div className="mb-3">
-        <p className="fw-bold">Start and finish</p>
+        <p className="fw-bold">{t("details.startfinish")}</p>
         <MapContainer center={center} zoom={14}>
           <TileLayer
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
@@ -199,7 +202,7 @@ const Map = (props) => {
         </MapContainer>
       </div>
       <div className="mb-3">
-        <p fontWeight="bold">Enter GeoJSON file</p>
+        <p fontWeight="bold">{t("details.geojson_input")}</p>
         <input
           type="file"
           accept=".json,.geojson"
@@ -210,15 +213,15 @@ const Map = (props) => {
         <div>
           <div>
             <p>
-              In order to create a GeoJSON file, create a route in <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://mymaps.google.com">https://mymaps.google.com</a></span>.
+              {t("instructions.p1")} <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://mymaps.google.com">https://mymaps.google.com</a></span>.
             </p>
           </div>
           <div>
-            <p>Then, export the resulting route to a KMZ file.</p>
+            <p>{t("instructions.p2")}</p>
           </div>
           <div>
             <p>
-              Finally, convert this file into a GeoJSON format with this tool: <span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> y agregue el archivo resultante aquí.
+              {t("instructions.p3.1")}<span fontWeight="bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> {t("instructions.p3.2")}
             </p>
           </div>
         </div>

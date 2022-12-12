@@ -1,0 +1,19 @@
+{
+  "heading": "Home",
+  "create": "Create an organization",
+  "name": "Organization name",
+  "action": "Create",
+  "error": "Could not create organization",
+  "quantity": "You have {length, plural, =0 {No organizations} =1 {# organization} other {# organizations}}",
+  "details": {
+    "name": "Name",
+    "code": "Code",
+    "drivers": "Drivers",
+    "users": "Users",
+    "routes": "Routes",
+    "tip": {
+      "p1": "Tip: use the code",
+      "p2": "to invite drivers and users to this organization from the App"
+    }
+  }
+}

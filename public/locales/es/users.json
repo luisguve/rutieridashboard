@@ -1,0 +1,35 @@
+{
+  "drivers": {
+    "heading": "Conductores",
+    "no_org": "Crea una organización para invitar conductores",
+    "quantity": "{length, plural, =1 {Un conductor en esta organización} other {# conductores en esta organización}}",
+    "requests": "{length, plural, =0 {No hay solicitudes} =1 {# solicitud para unirse a esta organización como conductor} other {# solicitudes para unirse a esta organización como conductores}}",
+    "details": {
+      "name": "Nombre",
+      "email": "Email",
+      "route": "Ruta",
+      "select": "Seleccionar ruta"
+    },
+    "actions": {
+      "update": "Actualizar",
+      "remove": "Eliminar conductor de esta organización",
+      "accept": "Aceptar",
+      "reject": "Rechazar"
+    }
+  },
+  "users": {
+    "heading": "Usuarios",
+    "no_org": "Crea una organización para invitar usuarios",
+    "quantity": "{length, plural, =0 {No hay usuarios en esta organización} =1 {Un usuario en esta organización} other {# usuarios en esta organización}}",
+    "requests": "{length, plural, =0 {No hay solicitudes} =1 {# solicitud para unirse a esta organización como usuario} other {# solicitudes para unirse a esta organización como usuarios}}",
+    "details": {
+      "name": "Nombre",
+      "email": "Email"
+    },
+    "actions": {
+      "remove": "Eliminar usuario de esta organización",
+      "accept": "Aceptar",
+      "reject": "Rechazar"
+    }
+  }
+}

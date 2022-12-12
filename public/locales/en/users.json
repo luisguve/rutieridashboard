@@ -1,0 +1,35 @@
+{
+  "drivers": {
+    "heading": "Drivers",
+    "no_org": "Create an organization in order to invite drivers",
+    "quantity": "{length, plural, =0 {No drivers in this organization} =1 {# driver in this organization} other {# drivers in this organization}}",
+    "requests": "{length, plural, =0 {No requests} =1 {# request to to join this organization as driver} other {# requests to to join this organization as drivers}}",
+    "details": {
+      "name": "Name",
+      "email": "Email",
+      "route": "Route",
+      "select": "Select route"
+    },
+    "actions": {
+      "update": "Update",
+      "remove": "Remove driver from this organization",
+      "accept": "Accept",
+      "reject": "Reject"
+    }
+  },
+  "users": {
+    "heading": "Users",
+    "no_org": "Create an organization in order to invite users",
+    "quantity": "{length, plural, =1 {1 user in this organization} other {# users in this organization}}",
+    "requests": "{length, plural, =0 {No requests} =1 {# request to join this organization as user} other {# requests to join this organization as users}}",
+    "details": {
+      "name": "Name",
+      "email": "Email"
+    },
+    "actions": {
+      "remove": "Remove user from this organization",
+      "accept": "Accept",
+      "reject": "Reject"
+    }
+  }
+}

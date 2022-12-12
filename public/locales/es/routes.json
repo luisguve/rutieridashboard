@@ -1,0 +1,21 @@
+{
+  "heading": "Rutas",
+  "no_org": "Crea una organización antes de crear una ruta",
+  "edit": "Editar ruta",
+  "create": "Crear ruta",
+  "details": {
+    "name": "Nombre de la ruta",
+    "coordinates": "Coordenadas",
+    "latitude": "Latitud",
+    "longitude": "Longitud",
+    "startfinish": "Inicio y fin de ruta",
+    "geojson_input": "Cargar archivo GeoJSON"
+  },
+  "error": "No se pudo crear o editar ruta",
+  "instructions": {
+    "p1": "Para crear un archivo GeoJSON, cree una ruta en coche en",
+    "p2": "Luego, exporte la ruta creada a un archivo KMZ.",
+    "p3.1": "Finalmente, convierta este archivo a un formato GeoJSON con la herramienta",
+    "p3.2": " y agregue el archivo resultante aquí."
+  }
+}

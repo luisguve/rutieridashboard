@@ -1,10 +1,12 @@
 import { useState, useContext } from "react"
+import { useTranslation } from 'react-i18next';
 
 import Map from "../../components/Map"
 import { OrganizationContext, AuthContext, IRuta } from "../../context"
 import { STRAPI } from "../../lib/constants"
 
 const RoutesTab = () => {
+  const { t } = useTranslation("routes")
   const { ruta, setRuta, organizations } = useContext(OrganizationContext)
   const { user } = useContext(AuthContext)
   const [nombre, setNombre] = useState(() => {
@@ -71,7 +73,7 @@ const RoutesTab = () => {
     })
     .catch(error => {
       console.log(error)
-      setErrorMsg("Could not create organization")
+      setErrorMsg(t("error") || "Could not create or edit route")
     })
     .finally(() => {
       setLoading(false)
@@ -81,20 +83,20 @@ const RoutesTab = () => {
   if (!organizations.length) {
     return (
       <>
-        <h4>routes</h4>
+        <h4>{t("heading")}</h4>
         <hr />
-        <h5>Create an organization before creating a route</h5>
+        <h5>{t("no_org")}</h5>
       </>
     )
   }
 
   return (
     <>
-      <h4>routes</h4>
+      <h4>{t("heading")}</h4>
       <hr />
-      <h5>{ruta ? "Edit route" : "Create a route"}</h5>
+      <h5>{ruta ? t("edit") : t("create")}</h5>
       <div className="mb-3">
-        <label htmlFor="nombreinput" className="form-label">Route name</label>
+        <label htmlFor="nombreinput" className="form-label">{t("details.name")}</label>
         <input
           type="text"
           className="form-control mb-3"
@@ -103,8 +105,8 @@ const RoutesTab = () => {
           onChange={handleChangeName}
         />
         <div>
-          <h6>Coordinates</h6>
-          <label htmlFor="latinput" className="form-label">Latitude</label>
+          <h6>{t("details.coordinates")}</h6>
+          <label htmlFor="latinput" className="form-label">{t("details.latitude")}</label>
           <input
             type="text"
             className="form-control mb-3"
@@ -112,7 +114,7 @@ const RoutesTab = () => {
             value={lat}
             onChange={handleChangeLat}
           />
-          <label htmlFor="longtinput" className="form-label">Longitude</label>
+          <label htmlFor="longtinput" className="form-label">{t("details.longitude")}</label>
           <input
             type="text"
             className="form-control mb-3"
@@ -133,7 +135,7 @@ const RoutesTab = () => {
           className="btn btn-primary"
           onClick={handleSubmit}
           disabled={loading || !(nombre || geoJSON || lat || longt)}
-        >{ruta ? "Update route" : "Create route"}</button>
+        >{ruta ? t("edit") : t("create")}</button>
       </div>
       {
         errorMsg && (

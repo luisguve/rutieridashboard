@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { sanitize } from '../lib/miscellaneous';
+import { useTranslation } from 'react-i18next';
 
 const NewsletterForm = ( { status, message, onValidated }) => {
 
   const [ error, setError ] = useState(null);
   const [ email, setEmail ] = useState(null);
+
+  const { t } = useTranslation("newsletter")
 
   /**
    * Handle form submit.
@@ -16,7 +19,7 @@ const NewsletterForm = ( { status, message, onValidated }) => {
     setError(null);
 
     if ( ! email ) {
-      setError( 'Please enter a valid email address' );
+      setError( t("invalid_email") );
       return null;
     }
 
@@ -62,12 +65,12 @@ const NewsletterForm = ( { status, message, onValidated }) => {
 
   return (
     <div>
-      <h3 className="mb-1 uppercase fw-bold">Subscribe to newsletter</h3>
+      <h3 className="mb-1 uppercase fw-bold">{t("heading")}</h3>
       <div className="d-flex flex-column">
         <input
           onChange={(event) => setEmail(event?.target?.value ?? '')}
           type="email"
-          placeholder="Your email"
+          placeholder="email"
           className="form-control"
           onKeyUp={(event) => handleInputKeyEvent(event)}
         />
@@ -76,7 +79,7 @@ const NewsletterForm = ( { status, message, onValidated }) => {
           onClick={handleFormSubmit}
           disabled={status === "sending"}
         >
-          { status === "sending" ? "Sending" : "Subscribe"}
+          { status === "sending" ? t("loading") : t("action")}
         </button>
       </div>
       <div className="small">
