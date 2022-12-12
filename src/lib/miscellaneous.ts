@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify';
  *
  * @return {string} Sanitized string
  */
-export const sanitize = (content) => {
+export const sanitize = (content: string) => {
   return DOMPurify.sanitize(content);
 };
 
@@ -19,6 +19,6 @@ export const sanitize = (content) => {
  *
  * @returns {string} Singular or plural from of text.
  */
-export const getSingularOrPluralText = ( count, text ) => {
+export const getSingularOrPluralText = ( count: number, text: string ) => {
   return 1 < count ? `${text}s` : text;
 };

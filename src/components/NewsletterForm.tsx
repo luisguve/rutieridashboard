@@ -57,13 +57,18 @@ const NewsletterForm = ( { status, message, onValidated }: NewsletterFormProps) 
    * @param {String} message
    * @return {null|*}
    */
-  const getMessage = (message: string) => {
+  const getMessage = (message: string | Error | null) => {
     if ( !message ) {
       return null;
     }
-    const result = message?.split('-') ?? null;
+    let result
+
+    if (typeof message === "string") {
+      result = message.split('-') ?? null;
+    }
+
     if ( "0" !== result?.[0]?.trim() ) {
-      return sanitize(message);
+      return sanitize(message.toString());
     }
     const formattedMessage = result?.[1]?.trim() ?? null;
     return formattedMessage ? sanitize( formattedMessage ) : null;
