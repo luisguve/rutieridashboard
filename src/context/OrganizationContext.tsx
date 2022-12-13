@@ -121,6 +121,26 @@ export const OrganizationProvider = (props: ProviderProps) => {
       })
     })
   }
+  const createUpdateRuta = (ruta: IRuta, orgId: number) => {
+    setRuta(ruta)
+    setOrganizations((prevState) => {
+      return prevState.map(org => {
+        if (org.id === orgId) {
+          if (org.rutas.some(r => {r.id === ruta.id})) {
+            org.rutas = org.rutas.map(r => {
+              if (r.id === ruta.id) {
+                r = ruta
+              }
+              return r
+            })
+          } else {
+            org.rutas = [ruta]
+          }
+        }
+        return org
+      })
+    })
+  }
 
   return (
     <OrganizationContext.Provider value={{
@@ -128,7 +148,7 @@ export const OrganizationProvider = (props: ProviderProps) => {
       addOrg,
       setOrgs,
       ruta,
-      setRuta,
+      setRuta: createUpdateRuta,
       update,
       updateDriver
     }}>

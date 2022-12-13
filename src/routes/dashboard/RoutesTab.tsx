@@ -69,7 +69,7 @@ const RoutesTab = () => {
         ...res.data.attributes,
         ...res
       }
-      setRuta(fmtdRuta)
+      setRuta(fmtdRuta, orgId)
     })
     .catch(error => {
       console.log(error)
