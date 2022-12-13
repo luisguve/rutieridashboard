@@ -245,7 +245,7 @@ const Map = (props: MapProps) => {
           </div>
           <div>
             <p>
-              {t("instructions.p3.1")}<span className="fw-bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> {t("instructions.p3.2")}
+              {t("instructions.p3.1")} <span className="fw-bold"><a target="_blank" rel="noreferrer" href="https://products.aspose.app/gis/es/conversion/kmz-to-geojson">https://products.aspose.app/gis/es/conversion/kmz-to-geojson</a></span> {t("instructions.p3.2")}
             </p>
           </div>
         </div>
