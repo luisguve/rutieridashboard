@@ -76,7 +76,7 @@ const NewsletterForm = ( { status, message, onValidated }: NewsletterFormProps) 
 
   return (
     <div>
-      <h3 className="mb-1 uppercase fw-bold">{t("heading")}</h3>
+      <h4 className="mb-1 uppercase fw-bold">{t("heading")}</h4>
       <div className="d-flex flex-column">
         <input
           onChange={(event) => setEmail(event?.target?.value ?? '')}
