@@ -71,12 +71,6 @@ const firebaseRef = firebase.database().ref();
 // Create a GeoFire index
 var geoFire = new GeoFire(firebaseRef);
 
-interface GeoQueryProps {
-  key: string
-  location: [number, number]
-  distance: number
-}
-
 interface Point {
   key: string
   location: [number, number]
@@ -141,7 +135,7 @@ const Map = (props: MapProps) => {
         radius: 20
       });
 
-      geoQuery.on("key_entered", function({key, location, distance}: GeoQueryProps) {
+      geoQuery.on("key_entered", function(key: string, location: [number, number], distance: number) {
         console.log("key_entered", {key, location, distance})
         if (!key.includes(`ruta-${idRuta}`)) {
           return
@@ -153,7 +147,7 @@ const Map = (props: MapProps) => {
         }
       });
 
-      geoQuery.on("key_exited", function({key, location, distance}: GeoQueryProps) {
+      geoQuery.on("key_exited", function(key: string, location: [number, number], distance: number) {
         console.log("key_exited", {key, location, distance})
         if (!key.includes(`ruta-${idRuta}`)) {
           return
@@ -165,7 +159,7 @@ const Map = (props: MapProps) => {
         }
       });
 
-      geoQuery.on("key_moved", function({key, location, distance}: GeoQueryProps) {
+      geoQuery.on("key_moved", function(key: string, location: [number, number], distance: number) {
         console.log("key_moved", {key, location, distance})
         if (!key.includes(`ruta-${idRuta}`)) {
           return
