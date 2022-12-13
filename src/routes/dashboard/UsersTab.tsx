@@ -258,6 +258,9 @@ const UsersTab = (props: DriversTabProps) => {
           </h5>
         )
       }
+      <div className="alert alert-primary">
+        {t("tip.p1")} <span className="fw-bold">{organization.code}</span> {t("tip.p2")}
+      </div>
       {
         (mode === ROL_CHOFER) ?
           drivers.map(driver => (

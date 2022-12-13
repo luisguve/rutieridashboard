@@ -2,7 +2,7 @@
   "drivers": {
     "heading": "Conductores",
     "no_org": "Crea una organización para invitar conductores",
-    "quantity": "{length, plural, =1 {Un conductor en esta organización} other {# conductores en esta organización}}",
+    "quantity": "{length, plural, =0 {No hay conductores en esta organización} =1 {Un conductor en esta organización} other {# conductores en esta organización}}",
     "requests": "{length, plural, =0 {No hay solicitudes} =1 {# solicitud para unirse a esta organización como conductor} other {# solicitudes para unirse a esta organización como conductores}}",
     "details": {
       "name": "Nombre",
@@ -31,5 +31,9 @@
       "accept": "Aceptar",
       "reject": "Rechazar"
     }
+  },
+  "tip": {
+    "p1": "Tip: usa el código",
+    "p2": "para que conductores y usuarios se unan a esta organización desde la App"
   }
 }

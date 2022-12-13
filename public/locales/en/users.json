@@ -31,5 +31,9 @@
       "accept": "Accept",
       "reject": "Reject"
     }
+  },
+  "tip": {
+    "p1": "Tip: use the code",
+    "p2": "to invite drivers and users to this organization from the App"
   }
 }
