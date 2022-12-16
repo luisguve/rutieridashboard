@@ -21,13 +21,13 @@ const RoutesTab = () => {
     if (ruta && ruta.latlong) {
       return ruta.latlong.lat
     }
-    return 10.506098
+    return 9.75
   })
   const [longt, setLongt] = useState<number>(() => {
     if (ruta && ruta.latlong) {
       return ruta.latlong.longt
     }
-    return -66.9146017
+    return -63.1667
   })
   const [geoJSON, setGeoJSON] = useState<string>(() => {
     if (ruta) {
@@ -43,10 +43,18 @@ const RoutesTab = () => {
     setNombre(e.currentTarget.value)
   }
   const handleChangeLat = (e: React.FormEvent<HTMLInputElement>) => {
-    setLat(Number(e.currentTarget.value))
+    const { value } = e.currentTarget;
+    if (isNaN(value)) {
+      return
+    }
+    setLat(Number(value))
   }
   const handleChangeLongt = (e: React.FormEvent<HTMLInputElement>) => {
-    setLongt(Number(e.currentTarget.value))
+    const { value } = e.currentTarget;
+    if (isNaN(value)) {
+      return
+    }
+    setLongt(Number(value))
   }
   const handleSubmit = () => {
     if (!user) {
