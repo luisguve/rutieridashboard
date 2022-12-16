@@ -41,7 +41,7 @@ interface IOrganizationContext {
   ruta: IRuta | null
   addOrg: (_: IOrganization) => void
   setOrgs: (_: Array<IOrganization>) => void
-  setRuta: (_: IRuta) => void
+  setRuta: (_: IRuta, orgId: number) => void
   update: (_: IOrganization) => void
   updateDriver: (_: IUser) => void
 }
@@ -51,7 +51,7 @@ const defaultContext: IOrganizationContext = {
   ruta: null,
   addOrg: (_: IOrganization) => {},
   setOrgs: (_: Array<IOrganization>) => {},
-  setRuta: (_: IRuta) => {},
+  setRuta: (_: IRuta, orgId: number) => {},
   update: (_: IOrganization) => {},
   updateDriver: (_: IUser) => {}
 }

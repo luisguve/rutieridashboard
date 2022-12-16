@@ -44,14 +44,14 @@ const RoutesTab = () => {
   }
   const handleChangeLat = (e: React.FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    if (isNaN(value)) {
+    if (isNaN(Number(value))) {
       return
     }
     setLat(Number(value))
   }
   const handleChangeLongt = (e: React.FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    if (isNaN(value)) {
+    if (isNaN(Number(value))) {
       return
     }
     setLongt(Number(value))
@@ -143,7 +143,7 @@ const RoutesTab = () => {
           className="btn btn-primary"
           onClick={handleSubmit}
           disabled={loading || !(nombre || geoJSON || lat || longt)}
-        >{ruta ? t("edit") : t("create")}</button>
+        >{ruta ? t("save") : t("create")}</button>
       </div>
       {
         errorMsg && (

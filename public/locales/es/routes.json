@@ -2,6 +2,7 @@
   "heading": "Rutas",
   "no_org": "Crea una organización antes de crear una ruta",
   "edit": "Editar ruta",
+  "save": "Guardar Cambios",
   "create": "Crear ruta",
   "details": {
     "name": "Nombre de la ruta",

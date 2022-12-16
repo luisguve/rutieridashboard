@@ -2,6 +2,7 @@
   "heading": "Routes",
   "no_org": "Create an organization before creating a route",
   "edit": "Edit route",
+  "save": "Save changes",
   "create": "Create route",
   "details": {
     "name": "Route name",
