@@ -7,10 +7,15 @@ import Popper from '@popperjs/core';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 // import i18n (needs to be bundled ;))
 import './i18n';
+import ReactGA from 'react-ga';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import { STRAPI, ROL_CHOFER, ROL_PASAJERO } from "./lib/constants"
 import { AuthContext, AuthProvider, OrganizationProvider } from "./context"
+
+const TRACKING_ID = "G-0MGZQXDPE4";
+
+ReactGA.initialize(TRACKING_ID);
 
 interface AppWrapperProps {
   children: React.ReactNode
@@ -23,6 +28,9 @@ const AppWrapper = (props: AppWrapperProps) => {
       // setUser(user)
     }
   }, [user])
+  useEffect(() => {
+  	ReactGA.pageview(window.location.pathname + window.location.search);
+  }, [])
   return (<>{props.children}</>)
 }
 
